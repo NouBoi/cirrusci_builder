@@ -16,6 +16,7 @@ task:
       - git clone https://github.com/samsung-sdm450/kernel_samsung_sdm450 kernel/samsung/sdm450
   
   Build_script:
+      - cd ~/work
       - . build/envsetup.sh
       - lunch aosp_m11q-userdebug
       - export SELINUX_IGNORE_NEVERALLOWS=true
