@@ -10,7 +10,7 @@ task:
       - mkdir -p ~/work
       - cd ~/work
       - repo init --depth=1 -u https://github.com/PixelExperience/manifest -b eleven
-      - repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
       - git clone https://github.com/samsung-sdm450/android_device_samsung_m11q device/samsung/m11q
       - git clone https://github.com/samsung-sdm450/android_vendor_samsung_m11q vendor/samsung/m11q
       - git clone https://github.com/samsung-sdm450/kernel_samsung_sdm450 kernel/samsung/sdm450
