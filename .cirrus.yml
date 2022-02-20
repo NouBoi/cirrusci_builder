@@ -1,0 +1,28 @@
+task:
+  name: "Setting Up, Syncing, Building and Uploading..."
+  timeout_in: 240m  
+  container:
+      image: marvelmathesh/docker:rom
+      cpu: 8
+      memory: 32G
+  
+  Sync_script:
+      - mkdir -p ~/work
+      - cd ~/work
+      - repo init --depth=1 -u https://github.com/PixelExperience/manifest -b eleven
+      - repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+      - git clone https://github.com/samsung-sdm450/android_device_samsung_m11q device/samsung/m11q
+      - git clone https://github.com/samsung-sdm450/android_vendor_samsung_m11q vendor/samsung/m11q
+      - git clone https://github.com/samsung-sdm450/kernel_samsung_sdm450 kernel/samsung/sdm450
+  
+  Build_script:
+      - . build/envsetup.sh
+      - lunch aosp_m11q-userdebug
+      - export SELINUX_IGNORE_NEVERALLOWS=true
+      - mka bacon
+     
+  Upload_script:
+      - cd ~/work
+      - cd out/target/product/m11q
+      - curl -sL https://git.io/file-transfer | sh
+      - ./transfer wet *.zip
